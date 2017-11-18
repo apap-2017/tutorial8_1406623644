@@ -1,0 +1,25 @@
+<!DOCTYPE   html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Index</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+<body>
+	<div th:replace="fragments/fragment :: header">
+		</div><center>
+		<br/>
+		<h3>Welcome To Tutorial 8 APAP</h3>
+		
+		<a th:if="${#httpServletRequest.isUserInRole('ADMIN')}" href="/course/viewall">View
+			All Course</a><br/>
+		<a th:if="${#httpServletRequest.isUserInRole('USER')} or ${#httpServletRequest.isUserInRole('ADMIN')}" href="/student/viewall">View
+			All Student</a><br/>
+		
+		
+		<a href="/login">Login</a>
+	</center>
+	<div th:replace="fragments/fragment :: footer"></div>
+
+</body>
+</html>
+

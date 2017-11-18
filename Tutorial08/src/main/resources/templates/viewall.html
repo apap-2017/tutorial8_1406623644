@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>View All Students</title>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script>
+			$(document).ready(function() {
+    			$('#example').DataTable();
+    		} );
+		</script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"></link>
+        
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+		
+    </head>
+    <body>
+    
+    <div th:replace="fragments/fragment :: header"></div>
+        <h2 th:text=" 'Login as ' + ${#httpServletRequest.remoteUser}">Login as</h2>
+    <form th:action="@{/logout}" method="post">
+<input type="submit" value="Sign Out"/>
+</form>
+        <h1>All Students</h1>
+        
+        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	        <thead>
+	            <tr>
+	                <th>No</th>
+	                <th>NPM</th>
+	                <th>Name</th>
+	                <th>GPA</th>
+	                <th>Predikat</th>
+	                <th>Delete</th>
+	                <th>Update</th>
+	            </tr>
+	        </thead>
+	        
+	        <tbody>
+	            <tr th:each="student,iterationStatus: ${students}">
+	            	<td th:text="${iterationStatus.count}"></td>
+	            	<td th:text="${student.npm}"></td>
+	            	<td th:text="${student.name}"></td>
+	            	<td th:text="${student.gpa}"></td>
+	            	<td th:if="${student.gpa>=3.49}">Cum Laude!</td>
+	            	<td th:unless="${student.gpa>=3.49}">Sangat Memuaskan!</td>
+	            	<td><a th:href="'/student/delete/' + ${student.npm}"> Delete Data</a></td>
+	            	<td><a th:href="'/student/update/' + ${student.npm}"> Update Data</a></td>
+	            </tr>
+	        </tbody>
+   		</table>
+
+    	<!-- <div th:each="student,iterationStatus: ${students}">
+            <h3 th:text="'No. ' + ${iterationStatus.count}">No. 1</h3>
+	       	<h3 th:text="'NPM = ' + ${student.npm}">Student NPM</h3>
+	       	<h3 th:text="'Name = ' + ${student.name}">Student Name</h3>
+	       	<h3 th:text="'GPA = ' + ${student.gpa}">Student GPA</h3>
+	       	<h3 th:if="${student.gpa>=3.49}">Cum Laude!</h3>
+			<h3 th:unless="${student.gpa>=3.49}">Sangat Memuaskan!</h3>
+	       	<h3>Kuliah yang diambil</h3>
+			<ul th:each="course,iterationStatus: ${student.courses}">
+				<li th:text="${course.name} + '-' + ${course.credits} + ' sks'" >
+				Nama kuliah-X SKS
+				</li>
+			</ul>
+	       	<a th:href="'/student/delete/' + ${student.npm}"> Delete Data</a><br/>
+	       	<a th:href="'/student/update/' + ${student.npm}"> Update Data</a><br/>
+	       	<hr/>
+       	</div> -->
+    </body>
+</html>

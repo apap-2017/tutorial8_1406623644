@@ -1,0 +1,40 @@
+#Deskripsi
+Pada latihan tutorial ke 08 ini saya belajar bagaimana untuk mengimplementasi login/logout yang sederhana
+serta penerapan role untuk masing-masing privilege
+
+#Latihan
+
+	1. Pada dasarnya saya tinggal meng-copy paste kodingan yang sudah di sediakan untuk mengimplementasikan
+	"detail login as" ke file viewall-course.html
+
+	2. source code:
+
+	@Autowired
+	public void configureAdmin (AuthenticationManagerBuilder auth) throws Exception
+	{
+		auth.inMemoryAuthentication()
+		.withUser("admin").password("admin")
+		.roles("Administrator");
+	}
+
+	penjelasan: mengikuti kodingan yang sudah disediakan tinggal mengganti nama method menjadi nama yang 
+	lebih spesifik, serta mengganti id, password, dan roles seperti yang diminta menjadi admin.
+
+        3. setelah mencari cara nya di internet, akhirnya menemukan cara di stackoverflow, untuk membuat sebuah
+	laman bisa diakses oleh lebih dari satu roles yang tadinya menggunakan "hasRole" diganti dengan "hasAnyRole"
+	dan menambahkan role apa saja yang diperlukan
+	source code: 
+	.antMatchers("/student/**").hasAnyRole("USER", "ADMIN"),
+
+	setelah selesai dengan privilege role nya, diubah juga dengan link yang menuju course/student viewall, 
+	karena admin bisa mengakses kedua page tersebut,yang awalnya link nya seperti ini:
+	<a th:if="${#httpServletRequest.isUserInRole('USER')}" href="/student/viewall">View
+			All Student</a><br/>
+
+	menjadi seperti ini:
+	<a th:if="${#httpServletRequest.isUserInRole('USER')} or ${#httpServletRequest.isUserInRole('ADMIN')}" href="/student/viewall">View
+			All Student</a><br/>
+
+	tinggal menambahkan or sehingga link student viewall pun visible oleh role ADMIN
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
